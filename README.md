@@ -1,5 +1,5 @@
 # Fractals
-A demonstration of classic fractals with a color ramp generator in C
+A demonstration of classic fractals with a color palette generator in C
 
 # Building
 Clone this repository
