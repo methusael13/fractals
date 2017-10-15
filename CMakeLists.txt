@@ -23,7 +23,7 @@ target_link_libraries(${COMMON_LIBS})
 
 # Define build targets
 set(FRAC_EXE
-    julia mandelb ramp
+    julia mandelb ramp julia_still
 )
 foreach(frac_exe ${FRAC_EXE})
     add_executable(${frac_exe} src/examples/${frac_exe}.c)
