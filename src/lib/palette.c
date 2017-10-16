@@ -1,3 +1,28 @@
+/*
+ * The MIT License (MIT)
+ * 
+ * Copyright (c) 2017 Methusael Murmu
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ * 
+ */
+
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,6 +37,19 @@ static float h11(float t) { return t * t * (t - 1); }
 
 #define ABS(x) ((x) < 0 ? -(x) : (x))
 
+/*
+ * A color palette generator using given color data and color stops.
+ * A color gradient is built from the data using a monotonic cubic interpolation
+ * and is then transformed into a linear array of color palette bins.
+ * 
+ * @params stops            The color data from which the gradient is built. Needs to be
+ *                          arrays of [R, G, B] values in the range [0,255].
+ * @params stop_pos         A single array of floating point numbers in the range [0,1]
+ *                          defining the color stops.
+ * @params stop_size        The number of color stops passed.
+ * @params palette          An array of interpolated [R, G, B] values from the gradient
+ * @params palette_size     The size of the array to use for palette colors
+ */
 void build_color_palette(int (*stops)[3], float *stop_pos, int stop_size,
                          int (*palette)[3], int palette_size) {
     int i, c;
