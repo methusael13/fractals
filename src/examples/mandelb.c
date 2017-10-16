@@ -1,4 +1,6 @@
+#include <omp.h>
 #include <stdio.h>
+
 #include <gfx/gfx.h>
 #include <lib/palette.h>
 
@@ -27,13 +29,22 @@ float iterate_pixel(float x, float y) {
 }
 
 void render_mandelbrot(int (*palette)[3]) {
-    int x, y, cidx;
+    int p, cidx;
+    const int pixels = WIN_WIDTH * WIN_HEIGHT;
 
-    for (y = 0; y < WIN_HEIGHT; y++) {
-        for (x = 0; x < WIN_WIDTH; x++) {
-            cidx = (int) (iterate_pixel(x, y) * (PALETTE_SZ - 1));
+    #pragma omp parallel private(p, cidx, pixels)
+    {
+        #pragma omp for
+        for (p = 0; p < pixels; p++) {
+            int _x = p % WIN_WIDTH, _y = p / WIN_WIDTH;
+            cidx = (int)(iterate_pixel(_x, _y) * (PALETTE_SZ - 1));
             gfx_color(palette[cidx][0], palette[cidx][1], palette[cidx][2]);
-            gfx_point(x, y);
+            gfx_point(_x, _y);
+        }
+        
+        /* If being executed in the master thread */
+        if (omp_get_thread_num() == 0) {
+            printf("OpenMP thread count: %d\n", omp_get_num_threads());
         }
     }
 }

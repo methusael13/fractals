@@ -2,8 +2,10 @@
 
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 project(Fractals VERSION 0.1 LANGUAGES C)
-
 project(lib VERSION 0.1 LANGUAGES C)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fopenmp")
 
 add_library(lib
     # Core library
@@ -18,7 +20,7 @@ target_include_directories(lib PUBLIC
 )
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-set(COMMON_LIBS lib m X11 pthread)
+set(COMMON_LIBS lib m X11 pthread gomp)
 target_link_libraries(${COMMON_LIBS})
 
 # Define build targets
