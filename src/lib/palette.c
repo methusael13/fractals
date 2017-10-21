@@ -39,7 +39,7 @@ static float h11(float t) { return t * t * (t - 1); }
 
 /*
  * A color palette generator using given color data and color stops.
- * A color gradient is built from the data using a monotonic cubic interpolation
+ * A color gradient is built from the data using monotonic cubic interpolation
  * and is then transformed into a linear array of color palette bins.
  * 
  * @params stops            The color data from which the gradient is built. Needs to be
